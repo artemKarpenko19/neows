@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
-import { Grid , Container, Typography} from "@mui/material";
+import { Grid , Container} from "@mui/material";
 
 import useNasa from "../nasa-service/useRequest"; 
 import NeowsItem from "../neows-item/NeowsItem";
+import ErrorMessage from "../errorMessage/ErrorMessage";
+import Spinner from "../spinner/Spinner"
+import ObjectsQuantity from "../object-quantity/objectsQuantity";
 
 import "./neowsList.scss";
+
 
 const NeowsList = () => {
     const [asteroidsList, setAsteroidsList] = useState([]);
@@ -14,12 +18,13 @@ const NeowsList = () => {
 
     
     useEffect(() => {
+        // setInterval(onRequest, 5000);
         onRequest();
     }, [])
 
     const onRequest = () => {
-        getAllAsteroids()
-            .then(onAsteroidsListLoaded);
+       getAllAsteroids()
+       .then(onAsteroidsListLoaded);
     }
 
     const onAsteroidsListLoaded = (asteroidsList) => {
@@ -27,25 +32,37 @@ const NeowsList = () => {
         
     }
     
-   
+    const quantity = asteroidsList.length;
+
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const spinner = loading ? <Spinner/> : null;
+    const content = !(loading || error) ? <View asteroidsList={asteroidsList}/> : null
+    
 
     return (
         <Container>
-            <Typography variant="h4"
-                        className="header-title">
-                Near orbital objects (NEO)
-            </Typography>
-            <Grid container 
-                  spacing={{ xs: 2, md: 3 }} 
-                  columns={{ xs: 4, sm: 8, md: 12 }}
-                  className="cards-grid">
-                <NeowsItem asteroidsList={asteroidsList}/>
-            </Grid>
+            <ObjectsQuantity quantity={quantity}/>
+           {errorMessage}
+           {spinner}
+           {content}
+            
+            
         </Container>
         
     )
 }
 
+const View = (props) => {
+    const {asteroidsList} = props;
+    return (
+        <Grid     container 
+                  spacing={{ xs: 2, md: 3 }} 
+                  columns={{ xs: 4, sm: 8, md: 12 }}
+                  className="cards-grid">
+            <NeowsItem asteroidsList={asteroidsList}/>
+        </Grid>
+    )
+}
 
 
 export default NeowsList;

@@ -16,7 +16,7 @@ const NeowsItem = (props) => {
        const velocity = item.close_approach_data[0].relative_velocity.kilometers_per_hour; 
        const name = item.name;
         const style = hazard ? {'backgroundColor' : 'red'} : null;
-        // console.log(diameter, hazard, distance, velocity);
+       
 
         return (
 
