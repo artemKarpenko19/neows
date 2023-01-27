@@ -15,11 +15,11 @@ const NeowsList = () => {
     const [asteroidsList, setAsteroidsList] = useState([]);
 
     const {loading, error, getAllAsteroids} = useNasa();
-
+   
     
     useEffect(() => {
-        // setInterval(onRequest, 5000);
-        onRequest();
+        const interval = setInterval(onRequest, 5000);
+        return () => clearInterval(interval);
     }, [])
 
     const onRequest = () => {

@@ -23,7 +23,7 @@ const View = (props) => {
     const {quantity} = props;
     return(
         <Typography variant="h6" className='asteroids-quantity'> 
-             Quantity of objects nears the Earth: {quantity > 0 ? quantity : null }
+             Quantity of objects near the Earth: {quantity > 0 ? quantity : null }
         </Typography>
 
     )

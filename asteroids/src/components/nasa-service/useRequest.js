@@ -4,42 +4,44 @@ import { useHttp } from "./useHttp";
 const useNasa = () => {
     
     const {loading, request, error, clearError} = useHttp();
-    
-   // https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY
-   // https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-01-01&end_date=2023-02-27&api_key=2BlL7dBZrIT2nx1Mao41ZJ9DRGu1eVYLonxly82c
-   // "https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY"
-    
-    let startDate = '';
-
-    const transformDate = () => {
-        const now = new Date();
       
-        const year = now.getFullYear();
-        const month = now.getMonth();
-        const day = now.getDate();
-        const visibleMonth = (month > 8) ? month + 1 : `0${month + 1}`
-        const date = `${year}-${visibleMonth}-${day}`;
-        startDate = date;
+    const now = new Date();
+    function transformDate  (x) {
+        let startDate = 1;
+        return function () {
+            const today = now.getDate();
+            startDate = startDate + 1;
+            if (startDate === today - 1){
+                startDate=1;
+            }
+            
+            return startDate;
+        }
     }
-    transformDate();
-
+   
+    let counter = transformDate();
     
-   // const _apiBase = 'https://api.nasa.gov/neo/rest/v1/feed?';
-   // const endDate =  '2023-01-31';
+    const _apiBase = 'https://api.nasa.gov/neo/rest/v1/feed?';
+   
     const _apiKey = 'GoAGfLhYJ2RWzcOlKdeKR8ft1dmVHbf8ZtHEk23J';
+    
+    let tomorrow;
 
     const getAllAsteroids = async() => {
 
-    // const url = `${_apiBase}start_date=${startDate}&end_date=${endDate}&${_apiKey}`;
-    const res = await request(`https://api.nasa.gov/neo/rest/v1/feed?start_date=2023-01-27&end_date=2023-01-31&api_key=${_apiKey}`);
-    
+        let startDate = counter() + '';
+        tomorrow =  +startDate + 1 ;
+        startDate = (startDate <= 9) ? startDate = `0${startDate}`: startDate;
+        tomorrow = (tomorrow <= 9) ? tomorrow = `0${tomorrow}`: tomorrow;
+      
+        const res = await request(`${_apiBase}start_date=2023-01-${startDate}&end_date=2023-01-${tomorrow}&api_key=${_apiKey}`);
+        
     return _transformData(res);
     }
     
-    
    const _transformData = (data) => {
     console.log(data);
-    const date = '2023-01-27'
+    const date = `2023-01-${tomorrow}`;
         return data.near_earth_objects[date];
     }
 
