@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/neows/static/css/main.61f14700.css",
-    "main.js": "/neows/static/js/main.ded52edd.js",
+    "main.js": "/neows/static/js/main.09107373.js",
     "static/media/error.gif": "/neows/static/media/error.42292aa12b6bc303ce99.gif",
     "index.html": "/neows/index.html",
     "main.61f14700.css.map": "/neows/static/css/main.61f14700.css.map",
-    "main.ded52edd.js.map": "/neows/static/js/main.ded52edd.js.map"
+    "main.09107373.js.map": "/neows/static/js/main.09107373.js.map"
   },
   "entrypoints": [
     "static/css/main.61f14700.css",
-    "static/js/main.ded52edd.js"
+    "static/js/main.09107373.js"
   ]
 }
