@@ -1,30 +1,47 @@
 import React from "react";
+import {Grid, Card, CardMedia, CardContent, Typography, Divider} from "@mui/material";
 
-
-
+import "./neowsItem.scss";
 
 const NeowsItem = (props) => {
     const {asteroidsList} = props;
-    // const visibleData = asteroidsList.slice(0, 6);
-    console.log(asteroidsList.length);
+   
+    const visibleContent = asteroidsList.slice(0, 6);
     
-    const items = asteroidsList.map((item, i) => {
+    const items = visibleContent.map((item, i) => {
 
-       const diameter = item[i].estimated_diameter.kilometers.estimated_diameter_max;
-       const hazard = item[i].is_potentially_hazardous_asteroid;
-       const distance = item[i].close_approach_data[0].miss_distance.kilometers;
-       const velocity = item[i].close_approach_data[0].relative_velocity.kilometers_per_hour; 
-
+       const diameter = item.estimated_diameter.kilometers.estimated_diameter_max;
+       const hazard = item.is_potentially_hazardous_asteroid;
+       const distance = item.close_approach_data[0].miss_distance.kilometers;
+       const velocity = item.close_approach_data[0].relative_velocity.kilometers_per_hour; 
+       const name = item.name;
+        const style = hazard ? {'backgroundColor' : 'red'} : null;
         // console.log(diameter, hazard, distance, velocity);
 
         return (
-            <div className="neows-item" key={item[i].id}>
-                <div>{diameter}</div>
-                <div>Is potentially hazardous: { hazard ? 'yes' : 'no'}</div>
-                <div>Distance to the Earth: {distance}</div>
-                <div>Relative velocity: {velocity} kilometers per hour</div>
 
-            </div>
+            <Grid item xs={4} className="neows-item" key={item.id}>
+               <Card style={style}>
+                    <CardMedia  sx={{ height: 200 }}
+                                image='https://thumbs.dreamstime.com/b/meteor-asteroid-fireball-apocalypse-earth-planet-headed-end-world-as-crashing-ground-89615502.jpg'
+                                title="asteroid">
+
+                    </CardMedia>
+                    <CardContent className="card-text">
+                        <Typography variant="h6" className="card-text__title">
+                            Name: {name}
+                        </Typography>
+                        <Divider />
+                        <Typography className="card-text__descr">Diameter: {diameter} kilometers</Typography>
+                        <Typography className="card-text__descr">Is potentially hazardous: { hazard ? 'yes' : 'no'}</Typography>
+                        <Typography className="card-text__descr">Distance to the Earth: <br/>{distance} kilometers</Typography>
+                        <Typography className="card-text__descr">Relative velocity: <br/>{velocity} kilometers per hour</Typography>
+                    </CardContent>
+                    
+               </Card> 
+                
+
+            </Grid>
         )
     });
     return (

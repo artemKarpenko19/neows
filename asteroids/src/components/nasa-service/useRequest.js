@@ -25,7 +25,7 @@ const useNasa = () => {
     // console.log(data);
     const date = '2023-01-27'
     // console.log(data.near_earth_objects[date]);
-        return [data.near_earth_objects[date]];
+        return data.near_earth_objects[date];
     }
 
     return {loading, error, getAllAsteroids,  clearError}
